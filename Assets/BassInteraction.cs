@@ -5,11 +5,13 @@ using System;
 
 public class BassInteraction : MonoBehaviour {
 
-	public GameObject bass;
+	private GameObject bass;
+	private bool showBassLabel;
 
 	// Use this for initialization
 	void Start () {
 		bass = GameObject.FindWithTag("Bass");
+		showBassLabel = false;
 	}
 	
 	// Update is called once per frame
@@ -19,10 +21,23 @@ public class BassInteraction : MonoBehaviour {
 			Vector3 cameraPosition = Camera.main.transform.position;
 			Vector3 bassPosition = GameObject.FindGameObjectWithTag("Bass").transform.position;
 			double euclidianDistance = Math.Sqrt(Math.Pow(bassPosition.x - cameraPosition.x,2)+Math.Pow(bassPosition.y - cameraPosition.y,2)+Math.Pow(bassPosition.z - cameraPosition.z,2));
-			if (Input.GetKey(KeyCode.B) && euclidianDistance < 1.3D)
+			if (euclidianDistance < 1.3D)
 			{
-				bass.GetComponent<AudioSource>().Play();
+				showBassLabel = true;
+				if (Input.GetKey(KeyCode.B))
+				{
+					bass.GetComponent<AudioSource>().Play();
+				}
+			} else {
+				showBassLabel = false;
 			}
 		}
 	}
+	
+	void OnGUI() {
+		if (showBassLabel == true)
+		{
+        GUI.Label(new Rect(550, 400, 150, 20), "Press b to play bass !");
+		}
+    }
 }
