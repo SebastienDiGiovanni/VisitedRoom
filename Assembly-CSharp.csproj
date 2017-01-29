@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\BassInteraction.cs" />
      <Compile Include="Assets\FirstPersonCamera.cs" />
+     <Compile Include="Assets\LightInteraction.cs" />
      <Compile Include="Assets\PianoInteraction.cs" />
      <Compile Include="Assets\interactive_rock\Scripts\rock_free\colliders\rock_free_forte.cs" />
      <Compile Include="Assets\interactive_rock\Scripts\rock_free\colliders\rock_free_med.cs" />
