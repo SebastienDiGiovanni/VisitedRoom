@@ -6,61 +6,61 @@ using System;
 public class PianoInteraction : MonoBehaviour {
 
 	private GameObject piano;
+	private BoxCollider pianoCollider;
 	private bool playingPiano;
 	private bool showStartPianoLabel;
 	private bool showStopPianoLabel;
+	private bool showTest;
 
 	// Use this for initialization
 	void Start () {
 		piano = GameObject.Find("piano");
+		pianoCollider = piano.GetComponent<BoxCollider>();
 		playingPiano = false;
 		showStartPianoLabel = false;
 		showStopPianoLabel = false;
+		showTest = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Camera.main != null)
+		if (playingPiano == true)
 		{
-			if (piano.GetComponent<AudioSource>().isPlaying)
+			if (showStopPianoLabel == false)
 			{
-				playingPiano = true;
+				showStopPianoLabel = true;
 			}
-			else
+			if (Input.GetKeyDown(KeyCode.P))
 			{
+				piano.GetComponent<AudioSource>().Stop();
 				playingPiano = false;
+				showStopPianoLabel = false;
 			}
-			
-			Vector3 cameraPosition = Camera.main.transform.position;
-			Vector3 pianoPosition = piano.transform.position;
-			double euclidianDistance = Math.Sqrt(Math.Pow(pianoPosition.x - cameraPosition.x,2)+Math.Pow(pianoPosition.y - cameraPosition.y,2)+Math.Pow(pianoPosition.z - cameraPosition.z,2));
-			if (playingPiano == false)
+		}
+		else if (showStartPianoLabel == true && Input.GetKeyDown(KeyCode.P))
+		{
+			piano.GetComponent<AudioSource>().Play();
+			playingPiano = true;
+			showStartPianoLabel = false;
+		}
+	}
+	
+	void OnTriggerStay(Collider other) {
+		if (other == pianoCollider && playingPiano == false)
+		{
+			if (showStartPianoLabel == false)
 			{
-				if (euclidianDistance < 2D)
-				{
-					showStartPianoLabel = true;
-					if (Input.GetKeyDown(KeyCode.P) || playingPiano == true)
-					{
-						piano.GetComponent<AudioSource>().Play();
-						showStartPianoLabel = false;
-						showStopPianoLabel = true;
-					}
-				} 
-				else
-				{
-					showStartPianoLabel = false;
-				}
-			}
-			else
-			{
-				if (Input.GetKeyDown(KeyCode.P))
-				{
-					piano.GetComponent<AudioSource>().Stop();
-					showStopPianoLabel = false;
-				}
+				showStartPianoLabel = true;
 			}
 		}
 	}
+	
+	void OnTriggerExit(Collider other) {
+		if (other == pianoCollider && showStartPianoLabel == true)
+		{
+			showStartPianoLabel = false;
+		}
+    }
 	
 	void OnGUI() {
 		if (showStartPianoLabel == true)
@@ -70,6 +70,9 @@ public class PianoInteraction : MonoBehaviour {
 		else if (showStopPianoLabel == true)
 		{
 			GUI.Label(new Rect(525, 400, 200, 20), "Press p to stop playing piano.");
+		} else if (showTest == true)
+		{
+			GUI.Label(new Rect(525, 400, 200, 20), "TEST");
 		}
     }
 }

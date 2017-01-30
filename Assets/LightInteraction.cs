@@ -6,6 +6,7 @@ using System;
 public class LightInteraction : MonoBehaviour {
 
 	private GameObject light;
+	private BoxCollider lightCollider;
 	private bool on;
 	private bool showOnLabel;
 	private bool showOffLabel;
@@ -13,6 +14,7 @@ public class LightInteraction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		light = GameObject.Find("Light0");
+		lightCollider = light.GetComponent<BoxCollider>();
 		on = true;
 		showOnLabel = false;
 		showOffLabel = false;
@@ -20,48 +22,53 @@ public class LightInteraction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Camera.main != null)
+	}
+	
+	void OnTriggerStay(Collider other) {
+		if (other == lightCollider)
 		{
-			if (light.GetComponent<Light>().intensity > 0)
+			if (on == true)
 			{
-				on = true;
-			}
-			else
-			{
-				on = false;
-			}
-			
-			Vector3 cameraPosition = Camera.main.transform.position;
-			Vector3 lightPosition = light.transform.position;
-			double euclidianDistance = Math.Sqrt(Math.Pow(lightPosition.x - cameraPosition.x,2)+Math.Pow(lightPosition.y - cameraPosition.y,2)+Math.Pow(lightPosition.z - cameraPosition.z,2));
-			if (euclidianDistance < 0.8D)
-			{
-				if (on == false)
-				{
-					showOnLabel = true;
-					if (Input.GetKeyDown(KeyCode.L))
-					{
-						light.GetComponent<Light>().intensity = 1;
-						showOnLabel = false;
-					}
-				}
-				else
+				if (showOffLabel == false)
 				{
 					showOffLabel = true;
-					if (Input.GetKeyDown(KeyCode.L))
-					{
-						light.GetComponent<Light>().intensity = 0;
-						showOffLabel = false;
-					}
+				}
+				if (Input.GetKeyDown(KeyCode.L))
+				{
+					light.GetComponent<Light>().intensity = 0;
+					on = false;
+					showOffLabel = false;
 				}
 			}
 			else
 			{
+				if (showOnLabel == false)
+				{
+					showOnLabel = true;
+				}
+				if (Input.GetKeyDown(KeyCode.L))
+				{
+					light.GetComponent<Light>().intensity = 1;
+					on = true;
+					showOnLabel = false;
+				}
+			}	
+		}
+	}
+	
+	void OnTriggerExit(Collider other) {
+		if (other == lightCollider)
+		{
+			if (showOnLabel == true)
+			{
 				showOnLabel = false;
+			}
+			if (showOffLabel == true)
+			{
 				showOffLabel = false;
 			}
 		}
-	}
+    }
 	
 	void OnGUI() {
 		if (showOnLabel == true)
