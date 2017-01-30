@@ -46,16 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BassInteraction.cs" />
      <Compile Include="Assets\FirstPersonCamera.cs" />
      <Compile Include="Assets\LightInteraction.cs" />
      <Compile Include="Assets\PianoInteraction.cs" />
-     <Compile Include="Assets\interactive_rock\Scripts\rock_free\colliders\rock_free_forte.cs" />
-     <Compile Include="Assets\interactive_rock\Scripts\rock_free\colliders\rock_free_med.cs" />
-     <Compile Include="Assets\interactive_rock\Scripts\rock_free\colliders\rock_free_soft.cs" />
-     <Compile Include="Assets\interactive_rock\Scripts\rock_free\colliders\rock_free_stop.cs" />
-     <Compile Include="Assets\interactive_rock\Scripts\rock_free\rock_free.cs" />
-     <Compile Include="Assets\interactive_rock\Scripts\rock_free\rock_free_master.cs" />
      <None Include="Assets\plants\dd\AlphaTest-Bumped.shader" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
@@ -67,7 +60,6 @@
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
      <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
-     <None Include="Assets\interactive_rock\README.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
